@@ -1,0 +1,14 @@
+# MacOS
+.DS_Store
+
+# IntelliJ
+*.iml
+.idea/*
+!.idea/codeStyles/
+
+# gradle
+.gradle/
+
+# build results
+out/
+build/
