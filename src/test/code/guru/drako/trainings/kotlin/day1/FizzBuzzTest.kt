@@ -7,7 +7,7 @@ import org.junit.jupiter.params.provider.ValueSource
 import kotlin.test.assertEquals
 
 @TestInstance(Lifecycle.PER_CLASS)
-class FreeFunctionsTest {
+class FizzBuzzTest {
   @ParameterizedTest(name = "{index} => {0}")
   @ValueSource(ints = [3, 6, 9, 12, 18, 21, 96, 99])
   fun `numbers divisible by 3 should result in Fizz`(n: Int) {
