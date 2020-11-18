@@ -48,6 +48,6 @@ class ScrabbleTest {
     "PACHYCEPHALOSAURUS, 35"
   )
   fun `word score calculation should work`(word: String, expectedScore: Int) {
-    assertEquals(expectedScore, scrabbleScore(word))
+    assertEquals(expected = expectedScore, actual = scrabbleScore(word))
   }
 }
