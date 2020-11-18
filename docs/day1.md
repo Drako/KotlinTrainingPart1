@@ -3,6 +3,9 @@
 For experiments:
  * [FiddleTest.kt](../src/test/code/guru/drako/trainings/kotlin/day1/FiddleTest.kt)
  * [Fiddle.kt](../src/main/code/guru/drako/trainings/kotlin/day1/Fiddle.kt)
+ 
+For taking notes:
+ * [Notes](./day1-notes.md)
 
 ## Fundamentals
 
@@ -449,6 +452,9 @@ fun streamPrinter(out: PrintStream = System.out): Printer {
 
  * Anonymous objects can be used to implement interfaces ad hoc
  * All `object`s can implement interfaces and extend classes
+ 
+See also:
+ * [Object Expressions and Declarations](https://kotlinlang.org/docs/reference/object-declarations.html) 
 
 ### Exercise 4
 
