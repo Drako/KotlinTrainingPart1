@@ -5,6 +5,8 @@ plugins {
   java
   kotlin("jvm") version "1.4.10"
   id("org.jetbrains.kotlin.plugin.serialization") version "1.4.10"
+  id("org.jetbrains.kotlin.plugin.allopen") version "1.4.10"
+  id("org.jetbrains.kotlin.plugin.noarg") version "1.4.10"
 }
 
 group = "guru.drako.trainings.kotlin"
@@ -12,9 +14,12 @@ version = "1.0-SNAPSHOT"
 
 repositories {
   mavenCentral()
+  maven("https://bintray.com/kotlin/exposed")
 }
 
 object Version {
+  const val EXPOSED = "0.28.1"
+  const val H2 = "1.4.200"
   const val JUNIT = "5.7.0"
   const val KOTEST = "4.3.1"
   const val KOTLINX_COROUTINES = "1.4.1"
@@ -32,10 +37,13 @@ dependencies {
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Version.KOTLINX_COROUTINES}")
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:${Version.KOTLINX_COROUTINES}")
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-slf4j:${Version.KOTLINX_COROUTINES}")
-  implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:${Version.KOTLINX_SERIALIZATION}")
+  implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:${Version.KOTLINX_SERIALIZATION}")
 
   implementation("org.slf4j:slf4j-api:${Version.SLF4J}")
   runtimeOnly("ch.qos.logback:logback-classic:${Version.LOGBACK}")
+
+  implementation("org.jetbrains.exposed:exposed:${Version.EXPOSED}")
+  runtimeOnly("com.h2database:h2:${Version.H2}")
 
   testImplementation("org.junit.jupiter:junit-jupiter-api:${Version.JUNIT}")
   testImplementation("org.junit.jupiter:junit-jupiter-params:${Version.JUNIT}")
@@ -61,6 +69,14 @@ project.sourceSets {
       kotlin.srcDirs("src/test/code")
     }
   }
+}
+
+allOpen {
+  annotation("guru.drako.trainings.kotlin.day2.Open")
+}
+
+noArg {
+  annotation("guru.drako.trainings.kotlin.day2.NoArg")
 }
 
 tasks {

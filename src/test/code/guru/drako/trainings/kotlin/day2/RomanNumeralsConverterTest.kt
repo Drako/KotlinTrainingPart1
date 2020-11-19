@@ -1,5 +1,11 @@
 package guru.drako.trainings.kotlin.day2
 
+import io.kotest.matchers.ints.shouldBeExactly
+import io.kotest.matchers.shouldBe
+import io.kotest.property.Exhaustive
+import io.kotest.property.checkAll
+import io.kotest.property.exhaustive.ints
+import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.TestInstance.Lifecycle
@@ -7,7 +13,6 @@ import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvFileSource
 import org.junit.jupiter.params.provider.ValueSource
-import kotlin.test.assertEquals
 
 @TestInstance(Lifecycle.PER_CLASS)
 class RomanNumeralsConverterTest {
@@ -16,7 +21,7 @@ class RomanNumeralsConverterTest {
   @ParameterizedTest(name = "{index} ==> {1} should be {0}")
   @CsvFileSource(resources = ["RomanNumerals.csv"])
   fun `Conversion Roman to Arabic`(arabic: Int, roman: String) {
-    assertEquals(expected = arabic, actual = converter.roman2arabic(roman))
+    converter.roman2arabic(roman) shouldBeExactly arabic
   }
 
   @ParameterizedTest(name = "{index} ==> {0} should throw")
@@ -30,7 +35,7 @@ class RomanNumeralsConverterTest {
   @ParameterizedTest(name = "{index} ==> {0} should be {1}")
   @CsvFileSource(resources = ["RomanNumerals.csv"])
   fun `Conversion Arabic to Roman`(arabic: Int, roman: String) {
-    assertEquals(expected = roman, actual = converter.arabic2roman(arabic))
+    converter.arabic2roman(arabic) shouldBe roman
   }
 
   @ParameterizedTest(name = "{index} ==> {0} should throw")
@@ -42,9 +47,9 @@ class RomanNumeralsConverterTest {
   }
 
   @Test
-  fun `Back and forth should work`() {
-    for (n in 1..3999) {
-      assertEquals(expected = n, actual = converter.roman2arabic(converter.arabic2roman(n)))
+  fun `Back and forth should work`(): Unit = runBlocking {
+    checkAll(Exhaustive.ints(1..3999)) { n ->
+      converter.roman2arabic(converter.arabic2roman(n)) shouldBeExactly n
     }
   }
 }
