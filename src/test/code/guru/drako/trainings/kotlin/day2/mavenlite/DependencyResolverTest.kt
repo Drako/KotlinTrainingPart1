@@ -15,7 +15,7 @@ import org.junit.jupiter.api.TestInstance.Lifecycle
 class DependencyResolverTest {
   private val mavenCentral = mockk<Repository>()
   private val jcenter = mockk<Repository>()
-  private val resolver = DependencyResolver(setOf(mavenCentral, jcenter))
+  private val resolver = DependencyResolver(listOf(mavenCentral, jcenter))
 
   @BeforeEach
   fun setUp() {
@@ -59,6 +59,8 @@ class DependencyResolverTest {
     }
 
     ex.artifact shouldBe "guru.drako.example:dummy:0.1.0"
+    coVerify { mavenCentral.queryArtifact(eq("guru.drako.example"), eq("dummy"), eq("0.1.0")) }
+    coVerify { jcenter.queryArtifact(eq("guru.drako.example"), eq("dummy"), eq("0.1.0")) }
   }
 
   @Test
@@ -117,6 +119,8 @@ class DependencyResolverTest {
   }
 
   private fun checkSingleDependencyFoundInRepository(repository: Repository) {
+    val firstRepo = mavenCentral.takeIf { repository === jcenter }
+
     val dummyArtifact = artifact("guru.drako.example", "dummy", "0.1.0", repository = repository)
 
     val myArtifact = artifact(artifactId = "my", version = "0.1.0") {
@@ -128,7 +132,10 @@ class DependencyResolverTest {
     }
 
     with(dummyArtifact) {
-      coVerify { repository.queryArtifact("guru.drako.example", id, version) }
+      firstRepo?.let { repo ->
+        coVerify { repo.queryArtifact(eq("guru.drako.example"), eq(id), eq(version)) }
+      }
+      coVerify { repository.queryArtifact(eq("guru.drako.example"), eq(id), eq(version)) }
     }
   }
 

@@ -3,7 +3,7 @@ package guru.drako.trainings.kotlin.day2.mavenlite
 /**
  * @property repositories The repositories to search for dependencies.
  */
-class DependencyResolver(val repositories: Set<Repository>) {
+class DependencyResolver(val repositories: List<Repository>) {
   /**
    * Check the known [repositories] for the dependencies of the given [artifact].
    * Dependencies are resolved recursively.
