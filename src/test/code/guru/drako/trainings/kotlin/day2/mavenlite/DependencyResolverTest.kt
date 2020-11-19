@@ -67,7 +67,9 @@ class DependencyResolverTest {
   fun `Collecting from different repos works`() {
     artifact(groupId = "guru.drako.example", artifactId = "a", version = "0.1.0", repository = mavenCentral)
     artifact(groupId = "guru.drako.example", artifactId = "b", version = "0.1.0", repository = jcenter)
-    val myArtifact = artifact(artifactId = "test", version = "0.1.0") {
+    val myArtifact = artifact {
+      id = "test"
+      version = "0.1.0"
       +"guru.drako.example:a:0.1.0"
       +"guru.drako.example:b:0.1.0"
     }
