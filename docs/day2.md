@@ -114,6 +114,15 @@ Duration: 1 hour
 Try to implement the `RomanNumeralsConverter` class.
 After you made all tests pass, try different ways of implementing it.
 
+### Exercise 5
+
+ * [ShopTest.kt](../src/test/code/guru/drako/trainings/kotlin/day2/gildedrose/ShopTest.kt)
+ * [Shop.kt](../src/main/code/guru/drako/trainings/kotlin/day2/gildedrose/Shop.kt)
+
+Duration: 1 hour
+
+Refactor the `Shop` class by first adding tests to `ShopTest`.
+
 ## Compiler PlugIns
 
 See also:
