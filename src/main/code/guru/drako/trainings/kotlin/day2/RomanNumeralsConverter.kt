@@ -1,8 +1,5 @@
 package guru.drako.trainings.kotlin.day2
 
-import java.lang.IllegalArgumentException
-import java.lang.NumberFormatException
-
 class RomanNumeralsConverter {
   /**
    * Converts a roman numeral [String] into a normal [Int].
