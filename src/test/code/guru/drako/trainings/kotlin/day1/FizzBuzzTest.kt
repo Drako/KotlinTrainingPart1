@@ -1,5 +1,7 @@
 package guru.drako.trainings.kotlin.day1
 
+import guru.drako.trainings.kotlin.Day1Test
+import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.TestInstance.*
 import org.junit.jupiter.params.ParameterizedTest
@@ -7,6 +9,7 @@ import org.junit.jupiter.params.provider.ValueSource
 import kotlin.test.assertEquals
 
 @TestInstance(Lifecycle.PER_CLASS)
+@Tag(Day1Test)
 class FizzBuzzTest {
   @ParameterizedTest(name = "{index} => {0}")
   @ValueSource(ints = [3, 6, 9, 12, 18, 21, 96, 99])

@@ -1,11 +1,13 @@
 package guru.drako.trainings.kotlin.day2
 
+import guru.drako.trainings.kotlin.Day2Test
 import io.kotest.matchers.ints.shouldBeExactly
 import io.kotest.matchers.shouldBe
 import io.kotest.property.Exhaustive
 import io.kotest.property.checkAll
 import io.kotest.property.exhaustive.ints
 import kotlinx.coroutines.runBlocking
+import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.TestInstance.Lifecycle
@@ -15,6 +17,7 @@ import org.junit.jupiter.params.provider.CsvFileSource
 import org.junit.jupiter.params.provider.ValueSource
 
 @TestInstance(Lifecycle.PER_CLASS)
+@Tag(Day2Test)
 class RomanNumeralsConverterTest {
   private val converter = RomanNumeralsConverter()
 

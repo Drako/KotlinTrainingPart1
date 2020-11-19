@@ -1,16 +1,15 @@
 package guru.drako.trainings.kotlin.day2
 
+import guru.drako.trainings.kotlin.Day2Test
 import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.should
 import io.kotest.matchers.throwable.haveCauseInstanceOf
 import io.kotest.mpp.newInstanceNoArgConstructor
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.TestInstance
+import org.junit.jupiter.api.*
 import org.junit.jupiter.api.TestInstance.*
-import org.junit.jupiter.api.assertDoesNotThrow
-import org.junit.jupiter.api.assertThrows
 
 @TestInstance(Lifecycle.PER_CLASS)
+@Tag(Day2Test)
 class NoArgTest {
   data class Point2D(val x: Int, val y: Int)
 
