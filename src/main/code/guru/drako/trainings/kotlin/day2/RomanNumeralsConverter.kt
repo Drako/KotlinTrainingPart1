@@ -18,6 +18,7 @@ class RomanNumeralsConverter {
       "I" to 1
     )
 
+    // no longer needed, only here as an example
     private val romanPattern = Regex(mapping.fold("^") { acc, (r) ->
       when {
         r.length == 1 -> "$acc$r{0,3}"
@@ -51,7 +52,7 @@ class RomanNumeralsConverter {
       ConversionState(target = target + a * factor, source = source.removePrefix(r.repeat(factor)))
     }
 
-    if (result.source.isNotEmpty()) {
+    if (result.source.isNotEmpty() || result.target == 0) {
       throw NumberFormatException("$roman is not a valid roman numeral")
     }
 
