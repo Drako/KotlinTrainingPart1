@@ -5,5 +5,6 @@ data class Item(
   var sellIn: Int,
   var quality: Int
 ) {
-  override fun toString() = """{ name: "$name", sellIn: $sellIn, quality: $quality }"""
+  // language=json
+  override fun toString() = """{ "name": "$name", "sellIn": $sellIn, "quality": $quality }"""
 }
