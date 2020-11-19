@@ -14,6 +14,11 @@ infix fun Int.pow(exponent: Int): Int {
   return n
 }
 
+object Foo {
+  @get:JvmStatic
+  val foo = ""
+}
+
 val kv = mapOf(
   "foo" to 23,
   "bar" to 1337
@@ -66,7 +71,9 @@ class Widget {
 
 
 fun foo(): Unit {
-  // TODO:
+
+  val fiddle = FiddleJava()
+  val n: List<Int> = fiddle.numbers
 
   val numbers = listOf(1, 2, 3)
   val doubled = numbers.map { it * 2 }
