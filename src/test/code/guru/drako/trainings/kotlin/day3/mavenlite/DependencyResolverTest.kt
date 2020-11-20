@@ -84,10 +84,10 @@ class DependencyResolverTest {
 
   @Test
   fun `Collecting recursively works`() {
+    artifact(groupId = "guru.drako.example", artifactId = "b", version = "0.1.0", repository = jcenter)
     artifact(groupId = "guru.drako.example", artifactId = "a", version = "0.1.0", repository = mavenCentral) {
       +"guru.drako.example:b:0.1.0"
     }
-    artifact(groupId = "guru.drako.example", artifactId = "b", version = "0.1.0", repository = jcenter)
     val myArtifact = artifact(artifactId = "test", version = "0.1.0") {
       +"guru.drako.example:a:0.1.0"
     }

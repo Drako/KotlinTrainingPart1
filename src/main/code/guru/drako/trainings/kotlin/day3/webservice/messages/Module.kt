@@ -6,6 +6,7 @@ import io.ktor.response.*
 import io.ktor.routing.*
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import org.slf4j.LoggerFactory
 
 fun Application.messageModule() {
   routing {
