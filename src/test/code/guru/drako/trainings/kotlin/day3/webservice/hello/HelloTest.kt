@@ -1,7 +1,6 @@
 package guru.drako.trainings.kotlin.day3.webservice.hello
 
 import guru.drako.trainings.kotlin.Day3Test
-import guru.drako.trainings.kotlin.day3.webservice.LoggerFactory
 import io.kotest.matchers.shouldBe
 import io.ktor.http.*
 import io.ktor.server.testing.*

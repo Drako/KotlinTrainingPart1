@@ -25,6 +25,32 @@ After you made all tests pass, try different ways of implementing it.
 
 ## Ktor
 
+*is an HTTP server and client implementation in Kotlin making heavy use of coroutines*
+
 See:
  * [ktor.io](https://ktor.io)
  * [ktor Server documentation](https://ktor.io/docs/intro.html)
+
+### Exercise 7
+
+ * [hello/HelloTest.kt](../src/test/code/guru/drako/trainings/kotlin/day3/webservice/hello/HelloTest.kt)
+ * [hello/Hello.kt](../src/main/code/guru/drako/trainings/kotlin/day3/webservice/hello/Hello.kt)
+ 
+ 
+ * [messages/ModuleTest.kt](../src/test/code/guru/drako/trainings/kotlin/day3/webservice/messages/ModuleTest.kt)
+ * [messages/Module.kt](../src/main/code/guru/drako/trainings/kotlin/day3/webservice/messages/Module.kt)
+
+Duration: 30 minutes
+
+Try to implement the tests that are marked as `TODO`.
+
+## Exposed
+
+*is an SQL library supporting typed queries*
+
+See:
+ * [Github Wiki](https://github.com/JetBrains/Exposed/wiki)
+
+### Exercise 8
+
+
