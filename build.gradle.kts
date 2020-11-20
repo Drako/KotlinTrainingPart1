@@ -14,13 +14,18 @@ version = "1.0-SNAPSHOT"
 
 repositories {
   mavenCentral()
+  jcenter()
+  maven("https://bintray.com/kotlin/exposed")
 }
 
 object Version {
+  const val EXPOSED = "0.17.7"
+  const val H2 = "1.4.200"
   const val JUNIT = "5.7.0"
   const val KOTEST = "4.3.1"
   const val KOTLINX_COROUTINES = "1.4.1"
   const val KOTLINX_SERIALIZATION = "1.0.1"
+  const val KTOR = "1.4.2"
   const val LOGBACK = "1.2.3"
   const val MOCKK = "1.10.2"
   const val SLF4J = "1.7.30"
@@ -38,6 +43,13 @@ dependencies {
 
   implementation("org.slf4j:slf4j-api:${Version.SLF4J}")
   runtimeOnly("ch.qos.logback:logback-classic:${Version.LOGBACK}")
+
+  implementation("org.jetbrains.exposed:exposed:${Version.EXPOSED}")
+  runtimeOnly("com.h2database:h2:${Version.H2}")
+
+  implementation("io.ktor:ktor-server-netty:${Version.KTOR}")
+  implementation("io.ktor:ktor-html-builder:${Version.KTOR}")
+  testImplementation("io.ktor:ktor-server-test-host:${Version.KTOR}")
 
   testImplementation("org.junit.jupiter:junit-jupiter-api:${Version.JUNIT}")
   testImplementation("org.junit.jupiter:junit-jupiter-params:${Version.JUNIT}")
