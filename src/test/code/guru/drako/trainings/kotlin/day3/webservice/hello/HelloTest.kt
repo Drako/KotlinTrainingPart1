@@ -1,6 +1,8 @@
 package guru.drako.trainings.kotlin.day3.webservice.hello
 
 import guru.drako.trainings.kotlin.Day3Test
+import guru.drako.trainings.kotlin.day3.webservice.messages.Message
+import guru.drako.trainings.kotlin.day3.webservice.messages.Messages
 import io.kotest.matchers.shouldBe
 import io.ktor.http.*
 import io.ktor.server.testing.*
@@ -38,16 +40,5 @@ class HelloTest {
     }
   }
 
-  @Test
-  fun `all messages`() {
-    withTestApplication({
-      helloModule()
-    }) {
-      handleRequest(HttpMethod.Get, "/messages").apply {
-        response.contentType() shouldBe ContentType.Application.Json.withParameter("charset", "UTF-8")
-        val messages = Json.decodeFromString<List<Message>>(response.content!!)
-        messages shouldBe Messages.messages
-      }
-    }
-  }
+  // TODO: add parameterized test for /greet/{who?}
 }

@@ -1,21 +1,24 @@
 package guru.drako.trainings.kotlin.day3.webservice.hello
 
+import freemarker.cache.ClassTemplateLoader
 import io.ktor.application.*
 import io.ktor.features.*
+import io.ktor.freemarker.*
 import io.ktor.html.*
-import io.ktor.http.*
 import io.ktor.response.*
 import io.ktor.routing.*
 import kotlinx.html.body
 import kotlinx.html.head
 import kotlinx.html.p
 import kotlinx.html.title
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 
 fun Application.helloModule() {
   install(DefaultHeaders)
   install(CallLogging)
+  install(FreeMarker) {
+    templateLoader = ClassTemplateLoader(Application::class.java.classLoader, "templates")
+  }
+
   routing {
     get("/") {
       call.respondHtml {
@@ -31,18 +34,9 @@ fun Application.helloModule() {
       }
     }
 
-    get("/messages") {
-      call.respondText(text = Json.encodeToString(Messages.messages), contentType = ContentType.Application.Json)
-    }
-
-    get("/messages/by/author/{author}") {
-      val author = call.parameters["author"]
-      call.respondText(
-        text = Json.encodeToString(Messages.messages.filter { it.author == author }),
-        contentType = ContentType.Application.Json
-      )
+    get("/greet/{who?}") {
+      val name = call.parameters["who"] ?: "world"
+      call.respond(FreeMarkerContent("hello.ftl", mapOf("name" to name)))
     }
   }
 }
-
-fun main(args: Array<String>) = io.ktor.server.netty.EngineMain.main(args)

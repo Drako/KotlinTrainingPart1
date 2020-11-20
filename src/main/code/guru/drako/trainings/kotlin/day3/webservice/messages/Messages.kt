@@ -1,4 +1,4 @@
-package guru.drako.trainings.kotlin.day3.webservice.hello
+package guru.drako.trainings.kotlin.day3.webservice.messages
 
 object Messages {
   val messages = listOf(

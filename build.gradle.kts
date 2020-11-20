@@ -49,6 +49,7 @@ dependencies {
 
   implementation("io.ktor:ktor-server-netty:${Version.KTOR}")
   implementation("io.ktor:ktor-html-builder:${Version.KTOR}")
+  implementation("io.ktor:ktor-freemarker:${Version.KTOR}")
   testImplementation("io.ktor:ktor-server-test-host:${Version.KTOR}")
 
   testImplementation("org.junit.jupiter:junit-jupiter-api:${Version.JUNIT}")
