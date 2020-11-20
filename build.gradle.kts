@@ -20,7 +20,7 @@ repositories {
 
 object Version {
   const val EXPOSED = "0.17.7"
-  const val H2 = "1.4.200"
+  const val H2 = "1.4.198"
   const val JUNIT = "5.7.0"
   const val KOTEST = "4.3.1"
   const val KOTLINX_COROUTINES = "1.4.1"

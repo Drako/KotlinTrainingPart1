@@ -1,9 +1,9 @@
 package guru.drako.trainings.kotlin.day3.webservice.messages
 
-object Messages {
-  val messages = listOf(
-    Message(author = "Felix Bytow", content = "Hello world!"),
-    Message(author = "Felix Bytow", content = "How art thou today?"),
-    Message(author = "Vlad the Impaler", content = "как тебя зовут?")
-  )
+import org.jetbrains.exposed.sql.Table
+
+object Messages : Table() {
+  val id = integer(name = "id").primaryKey().autoIncrement()
+  val author = varchar(name = "author", length = 32).index()
+  val content = varchar(name = "content", length = 280)
 }

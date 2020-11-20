@@ -11,13 +11,14 @@ import kotlinx.serialization.json.Json
 fun Application.messageModule(messageService: MessageService) {
   routing {
     get("/messages") {
-      call.respondText(text = Json.encodeToString(Messages.messages), contentType = ContentType.Application.Json)
+      call.respondText(text = Json.encodeToString(messageService.list()), contentType = ContentType.Application.Json)
     }
 
     get("/messages/by/author/{author}") {
       val author = call.parameters["author"]
+      require(author != null)
       call.respondText(
-        text = Json.encodeToString(Messages.messages.filter { it.author == author }),
+        text = Json.encodeToString(messageService.findbyAuthor(author)),
         contentType = ContentType.Application.Json
       )
     }
