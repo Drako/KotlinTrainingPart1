@@ -1,17 +1,14 @@
 package guru.drako.trainings.kotlin.day3.webservice.hello
 
 import guru.drako.trainings.kotlin.Day3Test
-import guru.drako.trainings.kotlin.day3.webservice.messages.Message
-import guru.drako.trainings.kotlin.day3.webservice.messages.Messages
+import guru.drako.trainings.kotlin.day3.webservice.LoggerFactory
 import io.kotest.matchers.shouldBe
 import io.ktor.http.*
 import io.ktor.server.testing.*
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
-import org.junit.jupiter.api.TestInstance.*
+import org.junit.jupiter.api.TestInstance.Lifecycle
 
 @TestInstance(Lifecycle.PER_CLASS)
 @Tag(Day3Test)

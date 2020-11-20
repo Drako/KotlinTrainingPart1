@@ -22,3 +22,9 @@ Duration: 30 minutes
 
 Try to implement the `collectDependenciesOf` function of `DependencyResolver`.
 After you made all tests pass, try different ways of implementing it.
+
+## Ktor
+
+See:
+ * [ktor.io](https://ktor.io)
+ * [ktor Server documentation](https://ktor.io/docs/intro.html)

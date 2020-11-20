@@ -1,8 +1,6 @@
 package guru.drako.trainings.kotlin.day3.webservice.hello
 
-import freemarker.cache.ClassTemplateLoader
 import io.ktor.application.*
-import io.ktor.features.*
 import io.ktor.freemarker.*
 import io.ktor.html.*
 import io.ktor.response.*
@@ -13,12 +11,6 @@ import kotlinx.html.p
 import kotlinx.html.title
 
 fun Application.helloModule() {
-  install(DefaultHeaders)
-  install(CallLogging)
-  install(FreeMarker) {
-    templateLoader = ClassTemplateLoader(Application::class.java.classLoader, "templates")
-  }
-
   routing {
     get("/") {
       call.respondHtml {
