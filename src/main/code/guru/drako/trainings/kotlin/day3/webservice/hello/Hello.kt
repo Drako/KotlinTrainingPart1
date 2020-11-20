@@ -12,7 +12,7 @@ import kotlinx.html.title
 
 fun Application.helloModule() {
   routing {
-    get("/") {
+    get {
       call.respondHtml {
         head {
           title("Hello world!")
