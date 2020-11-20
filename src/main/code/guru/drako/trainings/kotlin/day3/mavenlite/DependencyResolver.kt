@@ -1,4 +1,4 @@
-package guru.drako.trainings.kotlin.day2.mavenlite
+package guru.drako.trainings.kotlin.day3.mavenlite
 
 /**
  * @property repositories The repositories to search for dependencies.
