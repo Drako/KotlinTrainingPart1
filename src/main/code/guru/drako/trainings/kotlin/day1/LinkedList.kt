@@ -1,80 +1,29 @@
 package guru.drako.trainings.kotlin.day1
 
 class LinkedList<T> {
-  private data class Node<T>(
-    var value: T,
-    var prev: Node<T>? = null,
-    var next: Node<T>? = null
-  )
-
-  private var begin: Node<T>? = null
-  private var end: Node<T>? = null
-
-  var size: Int = 0
-    private set
+  val size: Int
+    get() = TODO()
 
   val isEmpty: Boolean
-    get() = size == 0
+    get() = TODO()
 
   fun pushFront(item: T) {
-    ++size
-
-    begin = Node(value = item, next = begin)
-      .apply { next?.prev = this }
-
-    if (size == 1) {
-      end = begin
-    }
+    TODO()
   }
 
-  fun popFront(): T = begin?.let { (value, _, next) ->
-    --size
-
-    if (size == 0) {
-      end = null
-    }
-
-    begin = next?.apply { prev = null }
-    return@let value
-  } ?: throw NoSuchElementException()
+  fun popFront(): T = TODO()
 
   fun pushBack(item: T) {
-    ++size
-
-    end = Node(value = item, prev = end)
-      .apply { prev?.next = this }
-
-    if (size == 1) {
-     begin = end
-    }
+    TODO()
   }
 
-  fun popBack(): T = end?.let { (value, prev, _) ->
-    --size
+  fun popBack(): T = TODO()
 
-    if (size == 0) {
-      begin = null
-    }
+  operator fun get(index: Int): T = TODO()
 
-    end = prev?.apply { next = null }
-    return@let value
-  } ?: throw NoSuchElementException()
+  operator fun set(index: Int, value: T) {
+    TODO()
+  }
 
-  operator fun get(index: Int): T = generateSequence(begin) { current -> current.next }
-    .drop(if (index < 0) size else index)
-    .firstOrNull()
-    ?.value
-    ?: throw IndexOutOfBoundsException("Index $index is out of range.")
-
-  operator fun set(index: Int, value: T) = generateSequence(begin) { current -> current.next }
-    .drop(if (index < 0) size else index)
-    .firstOrNull()
-    ?.run {
-      this.value = value
-    }
-    ?: throw IndexOutOfBoundsException("Index $index is out of range.")
-
-  operator fun contains(value: T) = generateSequence(begin) { current -> current.next }
-    .map { it.value }
-    .contains(value)
+  operator fun contains(value: T): Boolean = TODO()
 }

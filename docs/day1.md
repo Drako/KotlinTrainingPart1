@@ -20,7 +20,7 @@ fun add(a: Int, b: Int): Int {
  * Functions start with the `fun` keyword
  * Types come after the name
  * Parameters are implicitly `final`
- 
+              
 ```kotlin
 fun subtract(a: Int, b: Int) = a - b
 ```

@@ -3,10 +3,10 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
   java
-  kotlin("jvm") version "1.4.10"
-  id("org.jetbrains.kotlin.plugin.serialization") version "1.4.10"
-  id("org.jetbrains.kotlin.plugin.allopen") version "1.4.10"
-  id("org.jetbrains.kotlin.plugin.noarg") version "1.4.10"
+  kotlin("jvm") version "1.6.10"
+  id("org.jetbrains.kotlin.plugin.serialization") version "1.6.10"
+  id("org.jetbrains.kotlin.plugin.allopen") version "1.6.10"
+  id("org.jetbrains.kotlin.plugin.noarg") version "1.6.10"
 }
 
 group = "guru.drako.trainings.kotlin"
