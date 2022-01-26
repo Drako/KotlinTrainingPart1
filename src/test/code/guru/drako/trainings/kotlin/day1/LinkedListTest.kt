@@ -59,7 +59,6 @@ class LinkedListTest {
     assertEquals(expected = 2, actual = list.size)
     assertEquals(expected = 42, actual = list[1])
 
-
     list.pushBack(1337)
     assertEquals(expected = 3, actual = list.size)
     assertEquals(expected = 1337, actual = list[2])

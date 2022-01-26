@@ -6,6 +6,7 @@ import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.TestInstance.Lifecycle
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.CsvFileSource
 import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.MethodSource
 import java.util.stream.Stream
@@ -34,7 +35,13 @@ class ScrabbleTest {
   }
 
   @ParameterizedTest(name = "{index} => {0} should have the value {1}")
-  @MethodSource("testLetters")
+  // @MethodSource("testLetters")
+  // @CsvFileSource(resources = ["scrabble_values.csv"])
+  @CsvSource(
+    "A, 1",
+    "E, 1",
+    "I, 1"
+  )
   fun `letters should have their correct scores`(letter: Char, expectedScore: Int) {
     assertEquals(expected = expectedScore, actual = scrabbleScore("$letter"))
   }

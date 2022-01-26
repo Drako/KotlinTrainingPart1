@@ -122,7 +122,7 @@ when (c) {
 fun max(a, b) = when {
   a > b -> a
   a < b -> b
-  else -> IllegalStateException("a and b are equal")
+  else -> throw IllegalStateException("a and b are equal")
 }
 ```
 
