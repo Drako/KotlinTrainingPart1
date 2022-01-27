@@ -75,6 +75,21 @@ class LinkedList<T> {
     ?: throw IndexOutOfBoundsException("Index $index is out of range.")
 
   operator fun contains(value: T) = generateSequence(begin) { current -> current.next }
-    .map { it.value }
-    .contains(value)
+    .any { it.value == value }
+
+  /*
+  operator fun contains(value: T): Boolean {
+    if (isEmpty) {
+      return false
+    }
+
+    for (idx in 0 until size) {
+      if (get(idx) == value) {
+        return true
+      }
+    }
+
+    return false
+  }
+   */
 }

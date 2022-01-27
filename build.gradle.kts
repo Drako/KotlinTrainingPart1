@@ -14,21 +14,20 @@ version = "1.0-SNAPSHOT"
 
 repositories {
   mavenCentral()
-  jcenter()
   maven("https://bintray.com/kotlin/exposed")
 }
 
 object Version {
-  const val EXPOSED = "0.17.7"
-  const val H2 = "1.4.198"
-  const val JUNIT = "5.7.0"
-  const val KOTEST = "4.3.1"
-  const val KOTLINX_COROUTINES = "1.4.1"
-  const val KOTLINX_SERIALIZATION = "1.0.1"
-  const val KTOR = "1.4.2"
-  const val LOGBACK = "1.2.3"
-  const val MOCKK = "1.10.2"
-  const val SLF4J = "1.7.30"
+  const val EXPOSED = "0.17.14"
+  const val H2 = "2.1.210"
+  const val JUNIT = "5.8.2"
+  const val KOTEST = "5.1.0"
+  const val KOTLINX_COROUTINES = "1.6.0"
+  const val KOTLINX_SERIALIZATION = "1.3.2"
+  const val KTOR = "1.6.7"
+  const val LOGBACK = "1.2.10"
+  const val MOCKK = "1.12.2"
+  const val SLF4J = "1.7.33"
 }
 
 dependencies {
