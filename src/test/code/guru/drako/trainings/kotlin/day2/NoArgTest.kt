@@ -1,7 +1,7 @@
 package guru.drako.trainings.kotlin.day2
 
 import guru.drako.trainings.kotlin.Day2Test
-import io.kotest.matchers.collections.shouldBeIn
+import guru.drako.trainings.kotlin.day3.NoArg
 import io.kotest.matchers.should
 import io.kotest.matchers.throwable.haveCauseInstanceOf
 import io.kotest.mpp.newInstanceNoArgConstructor

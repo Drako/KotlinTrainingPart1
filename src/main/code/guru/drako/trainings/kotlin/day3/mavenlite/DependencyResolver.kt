@@ -1,9 +1,17 @@
-package guru.drako.trainings.kotlin.day2.mavenlite
+package guru.drako.trainings.kotlin.day3.mavenlite
+
+import guru.drako.trainings.kotlin.day3.LoggerFactory
+import guru.drako.trainings.kotlin.day3.debug
+import guru.drako.trainings.kotlin.day3.error
 
 /**
  * @property repositories The repositories to search for dependencies.
  */
 class DependencyResolver(val repositories: List<Repository>) {
+  companion object {
+    private val logger by LoggerFactory
+  }
+
   /**
    * Check the known [repositories] for the dependencies of the given [artifact].
    * Dependencies are resolved recursively.
@@ -13,6 +21,7 @@ class DependencyResolver(val repositories: List<Repository>) {
    * @throws ArtifactNotFoundException if the artifact could not be found anywhere.
    */
   suspend fun collectDependenciesOf(artifact: Artifact) {
-    TODO("Collect dependencies for $artifact")
+    logger.debug { "Resolving $artifact" }
+    TODO()
   }
 }

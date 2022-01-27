@@ -14,17 +14,13 @@ version = "1.0-SNAPSHOT"
 
 repositories {
   mavenCentral()
-  maven("https://bintray.com/kotlin/exposed")
 }
 
 object Version {
-  const val EXPOSED = "0.17.14"
-  const val H2 = "2.1.210"
   const val JUNIT = "5.8.2"
   const val KOTEST = "5.1.0"
   const val KOTLINX_COROUTINES = "1.6.0"
   const val KOTLINX_SERIALIZATION = "1.3.2"
-  const val KTOR = "1.6.7"
   const val LOGBACK = "1.2.10"
   const val MOCKK = "1.12.2"
   const val SLF4J = "1.7.33"
@@ -43,14 +39,6 @@ dependencies {
   implementation("org.slf4j:slf4j-api:${Version.SLF4J}")
   runtimeOnly("ch.qos.logback:logback-classic:${Version.LOGBACK}")
 
-  implementation("org.jetbrains.exposed:exposed:${Version.EXPOSED}")
-  runtimeOnly("com.h2database:h2:${Version.H2}")
-
-  implementation("io.ktor:ktor-server-netty:${Version.KTOR}")
-  implementation("io.ktor:ktor-html-builder:${Version.KTOR}")
-  implementation("io.ktor:ktor-freemarker:${Version.KTOR}")
-  testImplementation("io.ktor:ktor-server-test-host:${Version.KTOR}")
-
   testImplementation("org.junit.jupiter:junit-jupiter-api:${Version.JUNIT}")
   testImplementation("org.junit.jupiter:junit-jupiter-params:${Version.JUNIT}")
   testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${Version.JUNIT}")
@@ -61,28 +49,37 @@ dependencies {
   testImplementation("io.kotest:kotest-property-jvm:${Version.KOTEST}")
 }
 
-project.sourceSets {
-  getByName("main") {
-    java.srcDirs("src/main/code")
-    withConvention(KotlinSourceSet::class) {
-      kotlin.srcDirs("src/main/code")
-    }
+kotlin.sourceSets {
+  main {
+    kotlin.srcDirs("src/main/code")
   }
 
-  getByName("test") {
+  test {
+    kotlin.srcDirs("src/test/code")
+  }
+}
+
+sourceSets {
+  main {
+    java.srcDirs("src/main/code")
+  }
+
+  test {
     java.srcDirs("src/test/code")
-    withConvention(KotlinSourceSet::class) {
-      kotlin.srcDirs("src/test/code")
-    }
   }
 }
 
 allOpen {
-  annotation("guru.drako.trainings.kotlin.day2.Open")
+  annotation("guru.drako.trainings.kotlin.day3.Open")
 }
 
 noArg {
-  annotation("guru.drako.trainings.kotlin.day2.NoArg")
+  annotation("guru.drako.trainings.kotlin.day3.NoArg")
+}
+
+java {
+  sourceCompatibility = JavaVersion.VERSION_1_8
+  targetCompatibility = JavaVersion.VERSION_1_8
 }
 
 tasks {
@@ -95,6 +92,6 @@ tasks {
   }
 
   "wrapper"(Wrapper::class) {
-    gradleVersion = "6.5.1"
+    gradleVersion = "7.2"
   }
 }

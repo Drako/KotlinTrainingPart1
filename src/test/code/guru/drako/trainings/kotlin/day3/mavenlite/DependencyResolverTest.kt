@@ -1,6 +1,6 @@
-package guru.drako.trainings.kotlin.day2.mavenlite
+package guru.drako.trainings.kotlin.day3.mavenlite
 
-import guru.drako.trainings.kotlin.Day2Test
+import guru.drako.trainings.kotlin.Day3Test
 import io.kotest.matchers.nulls.beNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.should
@@ -11,7 +11,7 @@ import org.junit.jupiter.api.*
 import org.junit.jupiter.api.TestInstance.Lifecycle
 
 @TestInstance(Lifecycle.PER_CLASS)
-@Tag(Day2Test)
+@Tag(Day3Test)
 class DependencyResolverTest {
   private val mavenCentral = mockk<Repository>()
   private val jcenter = mockk<Repository>()
@@ -84,10 +84,10 @@ class DependencyResolverTest {
 
   @Test
   fun `Collecting recursively works`() {
+    artifact(groupId = "guru.drako.example", artifactId = "b", version = "0.1.0", repository = jcenter)
     artifact(groupId = "guru.drako.example", artifactId = "a", version = "0.1.0", repository = mavenCentral) {
       +"guru.drako.example:b:0.1.0"
     }
-    artifact(groupId = "guru.drako.example", artifactId = "b", version = "0.1.0", repository = jcenter)
     val myArtifact = artifact(artifactId = "test", version = "0.1.0") {
       +"guru.drako.example:a:0.1.0"
     }
