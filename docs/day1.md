@@ -185,10 +185,17 @@ const val MESSAGE = "Hello world!"
 ### Collections
 
 ```kotlin
+// immutable
 val numbers = listOf(1, 2, 3, 4)
 
+val squares = mapOf(1 to 1, 2 to 4, 3 to 9)
+
+// mutable
 val fib = mutableListOf(1, 2, 3, 5, 8, 13, 21)
-fib.add(34)
+fib += 34
+
+val magicNumbers = mutableMapOf("illuminati" to 23, "leet" to 1337)
+magicNumbers["answer"] = 42
 ```
 
 Collections come in mutable and immutable versions:
