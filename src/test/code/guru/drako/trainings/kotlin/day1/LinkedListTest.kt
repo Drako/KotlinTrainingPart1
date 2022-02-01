@@ -44,6 +44,8 @@ class LinkedListTest {
     assertEquals(expected = 23, actual = list.popFront())
     assertEquals(expected = 0, actual = list.size)
     assertTrue(list.isEmpty)
+
+    assertThrows<NoSuchElementException> { list.popFront() }
   }
 
   @Test
@@ -77,6 +79,8 @@ class LinkedListTest {
     assertEquals(expected = 23, actual = list.popBack())
     assertEquals(expected = 0, actual = list.size)
     assertTrue(list.isEmpty)
+
+    assertThrows<NoSuchElementException> { list.popBack() }
   }
 
   @Test
