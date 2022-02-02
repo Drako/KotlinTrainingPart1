@@ -53,6 +53,7 @@ increase(n = 1)        // 2
 
  * We call member functions by using the dot operator.
  * Most core types have member functions allowing conversions between them.
+   (No implicit conversions!)
  
 See also:
  * [Functions](https://kotlinlang.org/docs/reference/functions.html)
@@ -119,7 +120,7 @@ when (c) {
  * If a `when` is exhaustive (i.e. we covered all cases), the entire structure is an expression
 
 ```kotlin
-fun max(a, b) = when {
+fun max(a: Int, b: Int) = when {
   a > b -> a
   a < b -> b
   else -> throw IllegalStateException("a and b are equal")
@@ -365,3 +366,50 @@ Duration: 45 minutes
 
 Try to implement the `LinkedList` class.
 After you made all tests pass, try different ways of implementing it.
+
+### Sequences
+
+```kotlin
+val quads = (1..Int.MAX_VALUE)
+    .asSequence()
+    .map { it * it }
+    .takeWhile { it < 1000 }
+    .toList()
+```
+
+* Use for chaining operations on containers.
+* Any iterable can be treated as a sequence.
+
+
+See also:
+* [Sequences](https://kotlinlang.org/docs/reference/sequences.html)
+
+### Extension Functions
+
+```kotlin
+fun Int.square() {
+  return this * this
+}
+val a = 2
+val b = a.square()
+```
+
+* We can extend existing classes with custom functions and properties without touching them
+* Inside an extension function the so called "receiver" is `this`
+
+```kotlin
+fun <T> T.toStringUpperCase() = toString().toUpperCase()
+```
+
+* The receiver can be generic
+
+```kotlin
+fun <T> T.apply(block: T.() -> Unit) {
+  block()
+}
+```
+
+* Lambdas can also be extension functions
+
+See also:
+* [Extensions](https://kotlinlang.org/docs/reference/extensions.html)

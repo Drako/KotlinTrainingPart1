@@ -1,6 +1,7 @@
 package guru.drako.trainings.kotlin.day1.main
 
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import kotlin.random.Random
 
 suspend fun typeOut(message: String) {
