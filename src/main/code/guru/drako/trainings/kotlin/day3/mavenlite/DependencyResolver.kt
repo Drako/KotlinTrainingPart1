@@ -15,13 +15,25 @@ class DependencyResolver(val repositories: List<Repository>) {
   /**
    * Check the known [repositories] for the dependencies of the given [artifact].
    * Dependencies are resolved recursively.
+   * Seen dependencies are added to the set given in the [seen] parameter.
    *
    * @param artifact The locally specified [Artifact] describing the current project.
+   * @param seen The set of already seen dependencies for cycle detection.
    *
    * @throws ArtifactNotFoundException if the artifact could not be found anywhere.
    */
-  suspend fun collectDependenciesOf(artifact: Artifact) {
-    logger.debug { "Resolving $artifact" }
-    TODO()
+  suspend fun collectDependenciesOf(
+    artifact: Artifact,
+    seen: MutableSet<Dependency> = mutableSetOf(),
+  ) {
+    (artifact.dependencies - seen).forEach { dependency ->
+      seen += dependency
+      repositories
+        .firstNotNullOfOrNull {
+          it.queryArtifact(dependency.groupId, dependency.artifactId, dependency.version)
+        }
+        ?.also { collectDependenciesOf(it, seen) }
+        ?: throw ArtifactNotFoundException("$dependency")
+    }
   }
 }

@@ -13,3 +13,5 @@ data class Dependency(
 
   override fun toString() = "$groupId:$artifactId:$version"
 }
+
+// val dep = Dependency.of("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")

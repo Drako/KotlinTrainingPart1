@@ -20,6 +20,7 @@ class DependencyResolverTest {
   @BeforeEach
   fun setUp() {
     clearMocks(mavenCentral, jcenter)
+    // relaxed mock = mock with empty stubs
     coEvery { mavenCentral.queryArtifact(any(), any(), any()) } returns null
     coEvery { jcenter.queryArtifact(any(), any(), any()) } returns null
   }
@@ -96,8 +97,9 @@ class DependencyResolverTest {
       resolver.collectDependenciesOf(myArtifact)
     }
 
-    coVerify(exactly = 2) { mavenCentral.queryArtifact(any(), any(), any()) }
-    coVerify(exactly = 1) { jcenter.queryArtifact(any(), any(), any()) }
+    coVerify { mavenCentral.queryArtifact(eq("guru.drako.example"), eq("a"), eq("0.1.0")) }
+    coVerify { mavenCentral.queryArtifact(eq("guru.drako.example"), eq("b"), eq("0.1.0")) }
+    coVerify { jcenter.queryArtifact(eq("guru.drako.example"), eq("b"), eq("0.1.0")) }
   }
 
   @Test
