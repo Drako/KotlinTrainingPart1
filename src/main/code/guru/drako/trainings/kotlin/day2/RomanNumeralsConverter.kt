@@ -1,6 +1,5 @@
 package guru.drako.trainings.kotlin.day2
 
-// dokka
 class RomanNumeralsConverter {
   private val mapping: List<Pair<String, Int>> = listOf(
     "M" to 1000,
