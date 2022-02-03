@@ -22,7 +22,7 @@ class LinkedList<T> {
   val isEmpty: Boolean
     get() = size == 0
 
-  fun pushFront(item: T) {
+  fun pushFront(item: T) = synchronized(this) {
     begin = Item(item, next = begin).apply { next?.previous = this }
     if (end == null) {
       end = begin

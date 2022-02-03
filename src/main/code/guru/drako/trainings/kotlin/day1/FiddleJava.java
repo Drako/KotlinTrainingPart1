@@ -11,7 +11,7 @@ public class FiddleJava extends java.lang.Object {
 
     Foo.Companion.foo();
     //Foo.Companion.getANSWER();
-    final int answer = Foo.ANSWER;
+    final var answer = Foo.ANSWER;
 
     StringsKt.isBlank("");
 

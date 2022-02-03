@@ -16,6 +16,10 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvFileSource
 import org.junit.jupiter.params.provider.ValueSource
 
+// assertj -> assertk
+// hamcrest -> hamkrest
+// kotest
+
 @TestInstance(Lifecycle.PER_CLASS)
 @Tag(Day2Test)
 class RomanNumeralsConverterTest {
@@ -28,7 +32,7 @@ class RomanNumeralsConverterTest {
   }
 
   @ParameterizedTest(name = "{index} ==> {0} should throw")
-  @ValueSource(strings = ["N", "ABC", "IL"])
+  @ValueSource(strings = ["N", "ABC", "IL", "CDC"])
   fun `Roman to Arabic should fail if number is not a roman numeral`(n: String) {
     assertThrows<IllegalArgumentException> {
       converter.roman2arabic(n)

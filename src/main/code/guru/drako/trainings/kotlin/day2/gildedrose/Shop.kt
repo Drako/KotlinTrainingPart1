@@ -1,55 +1,37 @@
 package guru.drako.trainings.kotlin.day2.gildedrose
 
-class Shop(val items: List<Item>) {
-  fun updateQuality() {
-    for (item in items) {
-      if (item.name != "Aged Brie" && item.name != "Backstage passes to a TAFKAL80ETC concert") {
-        if (item.quality > 0) {
-          if (item.name != "Sulfuras, Hand of Ragnaros") {
-            --item.quality
-          }
-        }
-      } else {
-        if (item.quality < 50) {
-          ++item.quality
+private const val MIN_QUALITY = 0
+private const val MAX_QUALITY = 50
 
-          if (item.name == "Backstage passes to a TAFKAL80ETC concert") {
-            if (item.sellIn < 11) {
-              if (item.quality < 50) {
-                ++item.quality
-              }
-            }
+private val LEGENDARY_ITEMS = setOf("Sulfuras, Hand of Ragnaros")
 
-            if (item.sellIn < 6) {
-              if (item.quality < 50) {
-                ++item.quality
-              }
-            }
-          }
-        }
-      }
+private fun Item.isLegendary(): Boolean = name in LEGENDARY_ITEMS
 
-      if (item.name != "Sulfuras, Hand of Ragnaros") {
-        --item.sellIn
-      }
+private fun Item.isBackstagePass(): Boolean = name.startsWith(prefix = "backstage passes", ignoreCase = true)
 
-      if (item.sellIn < 0) {
-        if (item.name != "Aged Brie") {
-          if (item.name != "Backstage passes to a TAFKAL80ETC concert") {
-            if (item.quality > 0) {
-              if (item.name != "Sulfuras, Hand of Ragnaros") {
-                --item.quality
-              }
-            }
-          } else {
-            item.quality -= item.quality
-          }
-        } else {
-          if (item.quality < 50) {
-            ++item.quality
-          }
-        }
-      }
-    }
+private fun Item.isAged(): Boolean = name.startsWith(prefix = "aged", ignoreCase = true)
+
+private fun Item.isConjured(): Boolean = name.startsWith(prefix = "conjured", ignoreCase = true)
+
+private inline fun <T> Sequence<T>.forEachWith(action: T.() -> Unit) = forEach { it.action() }
+
+private fun Item.qualityModifier(): Int = when {
+  isBackstagePass() -> when {
+    sellIn <= 0 -> -MAX_QUALITY
+    sellIn <= 5 -> 3
+    sellIn <= 10 -> 2
+    else -> 1
   }
+  isAged() -> if (sellIn <= 0) 2 else 1
+  isConjured() -> if (sellIn <= 0) -4 else -2
+  else -> if (sellIn <= 0) -2 else -1
+}
+
+class Shop(val items: List<Item>) {
+  fun updateQuality() = items.asSequence()
+    .filterNot(Item::isLegendary)
+    .forEachWith {
+      quality = (quality + qualityModifier()).coerceIn(MIN_QUALITY, MAX_QUALITY)
+      --sellIn
+    }
 }
