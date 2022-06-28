@@ -2,10 +2,10 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
   java
-  kotlin("jvm") version "1.6.10"
-  id("org.jetbrains.kotlin.plugin.serialization") version "1.6.10"
-  id("org.jetbrains.kotlin.plugin.allopen") version "1.6.10"
-  id("org.jetbrains.kotlin.plugin.noarg") version "1.6.10"
+  kotlin("jvm") version "1.7.0"
+  id("org.jetbrains.kotlin.plugin.serialization") version "1.7.0"
+  id("org.jetbrains.kotlin.plugin.allopen") version "1.7.0"
+  id("org.jetbrains.kotlin.plugin.noarg") version "1.7.0"
 }
 
 group = "guru.drako.trainings.kotlin"
@@ -17,12 +17,12 @@ repositories {
 
 object Version {
   const val JUNIT = "5.8.2"
-  const val KOTEST = "5.1.0"
-  const val KOTLINX_COROUTINES = "1.6.0"
-  const val KOTLINX_SERIALIZATION = "1.3.2"
-  const val LOGBACK = "1.2.10"
-  const val MOCKK = "1.12.2"
-  const val SLF4J = "1.7.33"
+  const val KOTEST = "5.3.1"
+  const val KOTLINX_COROUTINES = "1.6.3"
+  const val KOTLINX_SERIALIZATION = "1.3.3"
+  const val LOGBACK = "1.2.11"
+  const val MOCKK = "1.12.4"
+  const val SLF4J = "1.7.36"
 }
 
 dependencies {
@@ -31,7 +31,7 @@ dependencies {
   testImplementation(kotlin("test-junit5"))
 
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Version.KOTLINX_COROUTINES}")
-  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:${Version.KOTLINX_COROUTINES}")
+  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-jdk9:${Version.KOTLINX_COROUTINES}")
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-slf4j:${Version.KOTLINX_COROUTINES}")
   implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:${Version.KOTLINX_SERIALIZATION}")
 
@@ -66,14 +66,6 @@ sourceSets {
   test {
     java.srcDirs("src/test/code")
   }
-}
-
-allOpen {
-  annotation("guru.drako.trainings.kotlin.day3.Open")
-}
-
-noArg {
-  annotation("guru.drako.trainings.kotlin.day3.NoArg")
 }
 
 java {
