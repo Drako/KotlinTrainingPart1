@@ -4,8 +4,6 @@ plugins {
   java
   kotlin("jvm") version "1.7.0"
   id("org.jetbrains.kotlin.plugin.serialization") version "1.7.0"
-  id("org.jetbrains.kotlin.plugin.allopen") version "1.7.0"
-  id("org.jetbrains.kotlin.plugin.noarg") version "1.7.0"
 }
 
 group = "guru.drako.trainings.kotlin"
@@ -66,11 +64,6 @@ sourceSets {
   test {
     java.srcDirs("src/test/code")
   }
-}
-
-java {
-  sourceCompatibility = JavaVersion.VERSION_11
-  targetCompatibility = JavaVersion.VERSION_11
 }
 
 tasks {
