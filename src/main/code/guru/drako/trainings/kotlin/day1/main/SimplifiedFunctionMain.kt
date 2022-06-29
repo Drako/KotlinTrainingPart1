@@ -1,5 +1,7 @@
 package guru.drako.trainings.kotlin.day1.main
 
+import guru.drako.trainings.kotlin.day1.square
+
 fun main() {
-  println("Hello world!")
+  23.square()
 }

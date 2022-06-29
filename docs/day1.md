@@ -218,7 +218,7 @@ class Greeter(
   }
 }
 
-val greeter = Greeter()
+val greeter = Greeter(System.out)
 greeter.greet()             // prints "Hello, world!\n"
 
 greeter.target = "Felix"
