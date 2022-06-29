@@ -3,7 +3,10 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
   java
   kotlin("jvm") version "1.7.0"
-  id("org.jetbrains.kotlin.plugin.serialization") version "1.7.0"
+  kotlin("plugin.serialization") version "1.7.0"
+  kotlin("plugin.spring") version "1.7.0"
+  id("org.springframework.boot") version "2.7.1"
+  id("io.spring.dependency-management") version "1.0.11.RELEASE"
 }
 
 group = "guru.drako.trainings.kotlin"
@@ -44,6 +47,9 @@ dependencies {
 
   testImplementation("io.kotest:kotest-assertions-core-jvm:${Version.KOTEST}")
   testImplementation("io.kotest:kotest-property-jvm:${Version.KOTEST}")
+
+  implementation("org.springframework.boot:spring-boot-starter-web")
+  implementation("org.springframework.boot:spring-boot-starter-actuator")
 }
 
 kotlin.sourceSets {
@@ -65,6 +71,9 @@ sourceSets {
     java.srcDirs("src/test/code")
   }
 }
+
+java.sourceCompatibility = JavaVersion.VERSION_11
+java.targetCompatibility = JavaVersion.VERSION_11
 
 tasks {
   withType<Test> {
