@@ -1,18 +1,11 @@
 package guru.drako.trainings.kotlin.day1
 
 import guru.drako.trainings.kotlin.Day1Test
-import io.kotest.matchers.should
-import io.kotest.matchers.types.beOfType
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.TestInstance.Lifecycle
 import org.junit.jupiter.api.assertThrows
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.Arguments
-import org.junit.jupiter.params.provider.MethodSource
-import java.util.stream.Stream
-import kotlin.reflect.KClass
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
@@ -20,36 +13,6 @@ import kotlin.test.assertTrue
 @TestInstance(Lifecycle.PER_CLASS)
 @Tag(Day1Test)
 class LinkedListTest {
-  companion object {
-    @JvmStatic
-    fun input(): Stream<Arguments> = Stream.of(
-      Arguments.of(10, IllegalArgumentException::class),
-      Arguments.of(20, NullPointerException::class),
-      Arguments.of(30, NotImplementedError::class),
-    )
-  }
-
-  fun foo(value: Int) {
-    when (value) {
-      10 -> {
-        throw IllegalArgumentException()
-      }
-      20 -> {
-        throw NullPointerException()
-      }
-      30 -> {
-        throw NotImplementedError()
-      }
-    }
-  }
-
-  @ParameterizedTest
-  @MethodSource("input")
-  fun `should throw expected exception`(value: Int, expected: KClass<out Throwable>) {
-    val ex = assertThrows<Throwable> { foo(value) }
-    ex should beOfType(expected)
-  }
-
   @Test
   fun `adding and removing elements to and from the front`() {
     val list = LinkedList<Int>()
@@ -118,8 +81,6 @@ class LinkedListTest {
     assertTrue(list.isEmpty)
 
     assertThrows<NoSuchElementException> { list.popBack() }
-
-
   }
 
   @Test

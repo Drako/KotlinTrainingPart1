@@ -1,1 +1,0 @@
-# Notes - Day 2
