@@ -7,6 +7,14 @@ data class SslConfig(
   val key: String
 )
 
+sealed class LoadedData
+
+object Loading : LoadedData()
+
+data class Data(val data: Any?) : LoadedData()
+
+data class Error(val error: String) : LoadedData()
+
 data class HttpServerConfig(
   val host: String,
   val port: UShort,
@@ -20,7 +28,7 @@ enum class Protocol {
 
 fun initSsl(config: SslConfig) {}
 
-fun initServer(config: HttpServerConfig) : Protocol {
+fun initServer(config: HttpServerConfig): Protocol {
   return if (config.ssl != null) {
     initSsl(config.ssl)
 
@@ -41,8 +49,10 @@ class Foo @JvmOverloads constructor(
   answer: Int = 23
 ) {
   var answer: Int = answer
-    get() = field*2
-    set(value) { field = value/2 }
+    get() = field * 2
+    set(value) {
+      field = value / 2
+    }
 
   init {
 
@@ -59,7 +69,9 @@ class Foo @JvmOverloads constructor(
     get() = size == 0
 
   var message: String
-    set(value) { println(value) }
+    set(value) {
+      println(value)
+    }
     get() = readln()
 
   fun say() {

@@ -66,6 +66,54 @@ Duration: 1 hour
 Try to implement the `RomanNumeralsConverter` class.
 After you made all tests pass, try different ways of implementing it.
 
+## Gradle
+
+* Maven can also be used to set up a Kotlin project
+* Multiplatform projects are only supported by Gradle right now
+* See [build.gradle.kts](../build.gradle.kts)
+
+## Compiler PlugIns
+
+See also:
+* [Compiler Plugins](https://kotlinlang.org/docs/reference/compiler-plugins.html)
+
+### allopen
+
+```kotlin
+@Open
+class Foo {
+  fun frobnicate() {
+    println("Foo")
+  }
+}
+
+class Bar : Foo() {
+  override fun frobnicate() {
+    println("Bar")
+  }
+}
+```
+
+* By default, all classes & their member functions are `final`
+* The "allopen" plugin allows us to specify marker annotations
+* Classes marked with these annotations become completely `open`
+
+### serialization
+
+```kotlin
+@Serializable
+data class Point(val x: Int, val y: Int) {
+  companion object {
+    fun fromJson(json: String): Point = Json.decodeFromString(serializer(), json)
+  }
+
+  fun toJson(): String = Json.encodeToString(serializer(), this)
+}
+```
+
+* We can make a class JSON serializable just by adding the `@Serializable` annotation
+* There are other formats than JSON in development (CBOR, ProtoBuf, Properties)
+
 ### Exercise 5
 
  * [ShopTest.kt](../src/test/code/guru/drako/trainings/kotlin/day2/gildedrose/ShopTest.kt)

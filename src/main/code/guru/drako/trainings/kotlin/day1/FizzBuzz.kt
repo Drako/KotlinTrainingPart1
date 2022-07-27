@@ -54,6 +54,15 @@ fun main() {
   // apply -> Wert als Receiver -> gibt Receiver zurück
   // run/with -> Wert als Receiver -> gibt internes Ergebnis zurück
 
+  val cfg23 = config {
+    numThreads = 10
+    if (Random.nextBoolean()) {
+      numThreads = 1
+    }
+    user = "www-data"
+    group = "www-data"
+  }
+
   val cfg = ConfigBuilder().apply {
     numThreads = 10
     if (Random.nextBoolean()) {

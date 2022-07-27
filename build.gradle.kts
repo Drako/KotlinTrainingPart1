@@ -75,6 +75,10 @@ sourceSets {
 java.sourceCompatibility = JavaVersion.VERSION_11
 java.targetCompatibility = JavaVersion.VERSION_11
 
+allOpen {
+  annotation("guru.drako.trainings.kotlin.day2.Open")
+}
+
 tasks {
   withType<Test> {
     // important for JUnit5
