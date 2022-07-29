@@ -16,10 +16,6 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvFileSource
 import org.junit.jupiter.params.provider.ValueSource
 
-// assertj -> assertk
-// hamcrest -> hamkrest
-// kotest
-
 @TestInstance(Lifecycle.PER_CLASS)
 @Tag(Day2Test)
 class RomanNumeralsConverterTest {
