@@ -1,7 +1,5 @@
 package guru.drako.trainings.kotlin.day1
 
-import java.util.NoSuchElementException
-
 class LinkedList<T> {
   data class Item<T>(
     var value: T,
@@ -27,6 +25,8 @@ class LinkedList<T> {
   }
 
   fun popFront(): T = begin?.let {
+    // set begin to point to second item
+    // if second item exists (list is not empty after pop), remove link to old begin
     begin = it.next?.apply { previous = null }
     --size
     if (size == 0) {
@@ -58,20 +58,20 @@ class LinkedList<T> {
     }
 
     /*
-    listOf(1, 2, 3, 4, 5, 6, 7,8, 9, 10)
-      .asSequence()
-      .filter { it % 2 == 0 }
-      .map { "$it" }
-      .toList()
-
-    val result = mutableListOf<Int>()
-    for (n in 1..10) {
-      if (n % 2 == 0) {
-        result.add(n)
-      }
+    var node = begin
+    var i = 0
+    while (node != null && i < index) {
+      node = node.next
+      ++i
+    }
+    if (i == index && node != null) {
+      return node.value
+    } else {
+      throw NoSuchElementException()
     }
     */
 
+    // return generateSequence(head.next as? NodeWithValue<T>) { it.next as? NodeWithValue<T> }
     return generateSequence(begin) { it.next }
       .drop(index)
       .first()
@@ -82,18 +82,6 @@ class LinkedList<T> {
     if (index !in 0 until size) {
       throw IndexOutOfBoundsException("Index $index is out of range.")
     }
-
-    val mapping = mapOf(
-      "pi" to 3.1415926,
-      "leet" to 13.37,
-      "answer" to 42.0
-    )
-
-    val keys = listOf("pi", "leet", "e", "i")
-    val values = keys.asSequence()
-      .mapNotNull { key -> mapping[key]?.let { key to it } }
-      .toMap()
-
 
     generateSequence(begin) { it.next }
       .drop(index)
