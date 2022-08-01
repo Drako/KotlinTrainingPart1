@@ -24,6 +24,7 @@ object Version {
   const val LOGBACK = "1.2.11"
   const val MOCKK = "1.12.4"
   const val SLF4J = "1.7.36"
+  const val SPRING_MOCKK = "3.1.1"
 }
 
 dependencies {
@@ -50,6 +51,11 @@ dependencies {
 
   implementation("org.springframework.boot:spring-boot-starter-web")
   implementation("org.springframework.boot:spring-boot-starter-actuator")
+
+  testImplementation("org.springframework.boot:spring-boot-starter-test") {
+    exclude(module = "mockito-core")
+  }
+  testImplementation("com.ninja-squad:springmockk:${Version.SPRING_MOCKK}")
 }
 
 kotlin.sourceSets {
