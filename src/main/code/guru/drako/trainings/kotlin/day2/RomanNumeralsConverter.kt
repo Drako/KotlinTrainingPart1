@@ -1,32 +1,5 @@
 package guru.drako.trainings.kotlin.day2
 
-// Symbol	I	V	 X	 L	  C	  D	   M
-// Value	1	5	10	50	100	500	1000
-
-// I -   1 (can appear up to 3 times)
-// IV -  4 (can appear only once)
-// V -   5 (can appear only once)
-// IX -  9 (can appear only once)
-// X -  10 (can appear up to 3 times)
-// XL - 40 (can appear only once)
-// L -  50 (can appear only once)
-// XC - 90 (can appear only once)
-// C - 100 (can appear up to 3 times)
-
-// IM is NOT 999
-
-// I - 1
-// II - 2
-// III - 3
-// IV - 4
-// V - 5
-// VI - 6
-// VII - 7
-// VIII - 8
-// IX - 9
-// X - 10
-// XI - 11
-
 class RomanNumeralsConverter {
   private val mapping: List<Pair<String, Int>> = listOf(
     "M" to 1000,
@@ -87,15 +60,4 @@ class RomanNumeralsConverter {
   }
 
   private operator fun String.times(factor: Int) = repeat(factor)
-
-  // target = EMPTY (0)
-  // for ((a, b) in mapping) {
-  // if (source != EMPTY ("")) {
-  //   factor = source "XIX" / a "X"
-  //   source -= factor * a (removePrefix)
-  //   target += factor * b (int multiplication)
-  // } else {
-  //   break
-  // }
-  // }
 }
