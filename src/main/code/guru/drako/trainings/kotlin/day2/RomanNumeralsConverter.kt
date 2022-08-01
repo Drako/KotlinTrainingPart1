@@ -27,6 +27,16 @@ class RomanNumeralsConverter {
       arabic2roman(arabic)
     }
 
+  private fun String.prefixCount(prefix: String): Int = when {
+    prefix.length == 1 -> asSequence()
+      .takeWhile { it == prefix[0] }
+      .take(3)
+      .count()
+
+    startsWith(prefix) -> 1
+    else -> 0
+  }
+
   /**
    * Converts a roman numeral [String] into a normal [Int].
    *
@@ -38,6 +48,16 @@ class RomanNumeralsConverter {
   fun roman2arabic(roman: String): Int {
     return romanToArabicMapping[roman]
       ?: `(╯°□°）╯︵` { NumberFormatException("$roman is not a valid roman numeral") }
+
+    // val result = mapping.fold(ConversionState(target = 0, source = roman))
+    // { (target, source), (r, a) ->
+    //   val factor = (source / r)
+    //   ConversionState(target = target + a * factor, source = source.removePrefix(r.repeat(factor)))
+    // }
+    // if (result.source.isNotEmpty() || result.target == 0) {
+    //   `(╯°□°）╯︵` { NumberFormatException("$roman is not a valid roman numeral") }
+    // }
+    // return result.target
   }
 
   /**
@@ -60,4 +80,6 @@ class RomanNumeralsConverter {
   }
 
   private operator fun String.times(factor: Int) = repeat(factor)
+
+  private operator fun String.div(divisor: String) = prefixCount(divisor)
 }

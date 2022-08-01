@@ -30,6 +30,10 @@ class HelloControllerTest {
       .response
       .contentAsString
 
+    // val result = mockMvc.perform(get("/greet"))
+    //   .andReturn()
+    // result.response.status == 200
+
     val message = Json.decodeFromString(HelloController.Message.serializer(), response)
     val expected = HelloController.Message(content = "Hello, world!")
 

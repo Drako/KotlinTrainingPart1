@@ -20,8 +20,15 @@ class DependencyResolver(val repositories: List<Repository>) {
    *
    * @throws ArtifactNotFoundException if the artifact could not be found anywhere.
    */
-  suspend fun collectDependenciesOf(artifact: Artifact) {
-    logger.debug { "Resolving $artifact" }
-    TODO()
+  suspend fun collectDependenciesOf(artifact: Artifact, seen: MutableSet<Dependency> = mutableSetOf()) {
+    (artifact.dependencies - seen).forEach { dependency ->
+      seen += dependency
+      repositories
+        .firstNotNullOfOrNull {
+          it.queryArtifact(dependency.groupId, dependency.artifactId, dependency.version)
+        }
+        ?.also { collectDependenciesOf(it, seen) }
+        ?: throw ArtifactNotFoundException("$dependency")
+    }
   }
 }

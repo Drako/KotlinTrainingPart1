@@ -64,10 +64,10 @@ See:
 @Serializable
 data class Point(val x: Int, val y: Int) {
   companion object {
-    fun fromJson(json: String): Point = JSON.parse(Point.serializer(), json)
+    fun fromJson(json: String): Point = Json.decodeFromString(Point.serializer(), json)
   }
 
-  fun toJson(): String = JSON.stringify(JSON.serializer(), this)
+  fun toJson(): String = Json.encodeToString(Point.serializer(), this)
 }
 ```
 

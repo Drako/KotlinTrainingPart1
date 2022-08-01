@@ -5,6 +5,7 @@ plugins {
   kotlin("jvm") version "1.7.0"
   kotlin("plugin.serialization") version "1.7.0"
   kotlin("plugin.spring") version "1.7.0"
+  kotlin("plugin.noarg") version "1.7.0"
   id("org.springframework.boot") version "2.7.1"
   id("io.spring.dependency-management") version "1.0.11.RELEASE"
 }
@@ -82,7 +83,11 @@ java.sourceCompatibility = JavaVersion.VERSION_11
 java.targetCompatibility = JavaVersion.VERSION_11
 
 allOpen {
-  annotation("guru.drako.trainings.kotlin.day2.Open")
+  annotation("guru.drako.trainings.kotlin.day3.Open")
+}
+
+noArg {
+  annotation("guru.drako.trainings.kotlin.day3.NoArg")
 }
 
 tasks {
