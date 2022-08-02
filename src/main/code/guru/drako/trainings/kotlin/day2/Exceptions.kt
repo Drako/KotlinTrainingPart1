@@ -5,11 +5,6 @@ inline fun <T: Throwable> `(╯°□°）╯︵`(block: () -> T): Nothing {
   throw block()
 }
 
-class NotFoundException(
-  message: String? = null,
-  cause: Throwable? = null,
-) : RuntimeException(message, cause)
-
 class Expired(
   message: String? = null,
   cause: Throwable? = null,

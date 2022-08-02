@@ -1,46 +1,60 @@
 package guru.drako.trainings.kotlin.day3.spring.services
 
+import guru.drako.trainings.kotlin.day3.spring.NotFoundException
 import guru.drako.trainings.kotlin.day3.spring.entities.NewPerson
 import guru.drako.trainings.kotlin.day3.spring.entities.Person
 import guru.drako.trainings.kotlin.day3.spring.entities.UpdatePerson
+import guru.drako.trainings.kotlin.day3.spring.repositories.PersonRepository
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
-import java.time.Period
+import javax.transaction.Transactional
 
 @Service
-class PersonService {
-  private val people = mutableListOf<Person>()
+class PersonService @Autowired constructor(
+  private val repository: PersonRepository
+) {
   private var nextId = 1
 
   fun clear() {
-    people.clear()
+    repository.deleteAll()
     nextId = 1
   }
 
   fun newPerson(newPerson: NewPerson): Person {
     return Person(id = nextId++, firstName = newPerson.firstName, lastName = newPerson.lastName)
-      .also { person -> people.add(person) }
+      .also { repository.save(it) }
   }
 
+  @Transactional
   fun deletePerson(id: Int): Boolean {
-    return people.removeIf { it.id == id }
+    return if (repository.existsById(id)) {
+      repository.deleteById(id)
+      true
+    } else false
   }
 
-  fun updatePerson(id: Int, update: UpdatePerson): Person? {
-    return people.firstOrNull { it.id == id }
-      ?.apply {
-        update.firstName?.also { firstName = it }
-        update.lastName?.also { lastName = it }
+  @Transactional
+  fun updatePerson(id: Int, update: UpdatePerson): Person {
+    if (update.firstName != null) {
+      if (update.lastName != null) {
+        repository.updateNames(id, update.firstName, update.lastName)
+      } else {
+        repository.updateFirstName(id, update.firstName)
       }
+    } else if (update.lastName != null) {
+      repository.updateLastName(id, update.lastName)
+    }
+
+    return getPerson(id)
+      ?: throw NotFoundException.of<Person>(id)
   }
 
   fun getPerson(id: Int): Person? {
-    return people.firstOrNull { it.id == id }
+    return repository.findById(id).orElse(null)
   }
 
   fun getPeople(offset: Int, limit: Int): List<Person> {
-    return people.asSequence()
-      .drop(offset)
-      .take(limit)
-      .toList()
+    return repository.findAll(PageRequest.of(offset / limit, limit)).toList()
   }
 }

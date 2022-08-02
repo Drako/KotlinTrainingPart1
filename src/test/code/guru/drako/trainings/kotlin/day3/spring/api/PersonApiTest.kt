@@ -4,6 +4,7 @@ import guru.drako.trainings.kotlin.SpringTest
 import guru.drako.trainings.kotlin.day3.spring.controllers.PersonController
 import guru.drako.trainings.kotlin.day3.spring.entities.NewPerson
 import guru.drako.trainings.kotlin.day3.spring.entities.Person
+import guru.drako.trainings.kotlin.day3.spring.repositories.PersonRepository
 import guru.drako.trainings.kotlin.day3.spring.services.PersonService
 import io.kotest.matchers.shouldBe
 import kotlinx.serialization.json.Json
@@ -12,15 +13,21 @@ import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
+import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 @ExtendWith(SpringExtension::class)
-@WebMvcTest(PersonController::class, PersonService::class)
+@SpringBootTest
+@AutoConfigureMockMvc
 @Tag(SpringTest)
 class PersonApiTest {
   @Autowired
@@ -59,7 +66,7 @@ class PersonApiTest {
         // language=JSON
         .content("""{"firstName": "Felix", "lastName": "Bytow"}""")
     )
-      .andExpect(MockMvcResultMatchers.status().isOk)
+      .andExpect(status().isOk)
       .andReturn()
 
     result.response.getHeader("Location") shouldBe "/person/12"
@@ -71,13 +78,33 @@ class PersonApiTest {
 
   @Test
   fun `delete user successful`() {
-    mockMvc.perform(MockMvcRequestBuilders.delete("/person/10"))
-      .andExpect(MockMvcResultMatchers.status().isOk)
+    mockMvc.perform(get("/person/10"))
+      .andExpect(status().isOk)
+
+    mockMvc.perform(delete("/person/10"))
+      .andExpect(status().isOk)
+
+    mockMvc.perform(get("/person/10"))
+      .andExpect(status().isNotFound)
   }
 
   @Test
   fun `delete user failure`() {
-    mockMvc.perform(MockMvcRequestBuilders.delete("/person/42"))
-      .andExpect(MockMvcResultMatchers.status().isNotFound)
+    mockMvc.perform(delete("/person/42"))
+      .andExpect(status().isNotFound)
+  }
+
+  @Test
+  fun `update non existent person`() {
+    val response = mockMvc.perform(
+      put("/person/42")
+        .contentType(MediaType.APPLICATION_JSON)
+        .accept(MediaType.APPLICATION_JSON)
+        // language=JSON
+        .content("""{"firstName": "Marcus"}""")
+    ).andExpect(status().isNotFound)
+      .andReturn().response
+
+    response.errorMessage shouldBe "Person#42 does not exist."
   }
 }

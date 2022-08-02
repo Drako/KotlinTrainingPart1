@@ -42,19 +42,25 @@ class PersonControllerTest {
 
   @Test
   fun `create new user`() {
+    // setup mocks
     val newPerson = slot<NewPerson>()
     every { service.newPerson(capture(newPerson)) } answers {
+      // it.invocation.args[0] as NewPerson
       Person(id = 1, newPerson.captured.firstName, newPerson.captured.lastName)
     }
 
+    // call the function to test
     val response = controller.newPerson(NewPerson("Felix", "Bytow"))
+
+    // assert results
     response.statusCode shouldBe HttpStatus.OK
     response.headers.location shouldBe URI.create("/person/1")
 
     val expected = Person(1, "Felix", "Bytow")
     response.body shouldBe expected
 
-    verify { service.newPerson(any()) }
+    // verify mocks
+    verify(exactly = 1) { service.newPerson(any()) }
   }
 
   @Test
@@ -65,8 +71,8 @@ class PersonControllerTest {
     every { response.status = SC_OK } just Runs
     controller.deletePerson(42, response)
 
-    verify { service.deletePerson(any()) }
-    verify { response.status = SC_OK }
+    verify(exactly = 1) { service.deletePerson(any()) }
+    verify(exactly = 1) { response.status = SC_OK }
   }
 
   @Test
@@ -77,7 +83,7 @@ class PersonControllerTest {
     every { response.status = SC_NOT_FOUND } just Runs
     controller.deletePerson(42, response)
 
-    verify { service.deletePerson(any()) }
-    verify { response.status = SC_NOT_FOUND }
+    verify(exactly = 1) { service.deletePerson(any()) }
+    verify(exactly = 1) { response.status = SC_NOT_FOUND }
   }
 }

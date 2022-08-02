@@ -36,10 +36,9 @@ class PersonController @Autowired constructor(
   }
 
   @PutMapping("/{id}", produces = ["application/json"])
-  fun updatePerson(@PathVariable id: Int, @RequestBody update: UpdatePerson): ResponseEntity<Person> {
+  @ResponseBody
+  fun updatePerson(@PathVariable id: Int, @RequestBody update: UpdatePerson): Person {
     return personService.updatePerson(id, update)
-      ?.let { ResponseEntity.ok(it) }
-      ?: ResponseEntity.notFound().build()
   }
 
   @GetMapping("/{id}", produces = ["application/json"])
