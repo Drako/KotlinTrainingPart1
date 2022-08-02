@@ -2,6 +2,7 @@ package guru.drako.trainings.kotlin.day3.spring.controllers
 
 import guru.drako.trainings.kotlin.day3.spring.entities.NewPerson
 import guru.drako.trainings.kotlin.day3.spring.entities.Person
+import guru.drako.trainings.kotlin.day3.spring.entities.PersonResponse
 import guru.drako.trainings.kotlin.day3.spring.entities.UpdatePerson
 import guru.drako.trainings.kotlin.day3.spring.services.PersonService
 import org.springframework.beans.factory.annotation.Autowired
@@ -19,11 +20,11 @@ class PersonController @Autowired constructor(
   val personService: PersonService
 ) {
   @PostMapping(produces = ["application/json"])
-  fun newPerson(@RequestBody person: NewPerson): ResponseEntity<Person> {
+  fun newPerson(@RequestBody person: NewPerson): ResponseEntity<PersonResponse> {
     val entity = personService.newPerson(person)
     return ResponseEntity.ok().headers(HttpHeaders().apply {
       location = URI.create("/person/${entity.id}")
-    }).body(entity)
+    }).body(PersonResponse.fromPerson(entity))
   }
 
   @DeleteMapping("/{id}")
@@ -37,14 +38,14 @@ class PersonController @Autowired constructor(
 
   @PutMapping("/{id}", produces = ["application/json"])
   @ResponseBody
-  fun updatePerson(@PathVariable id: Int, @RequestBody update: UpdatePerson): Person {
-    return personService.updatePerson(id, update)
+  fun updatePerson(@PathVariable id: Int, @RequestBody update: UpdatePerson): PersonResponse {
+    return PersonResponse.fromPerson(personService.updatePerson(id, update))
   }
 
   @GetMapping("/{id}", produces = ["application/json"])
-  fun getPerson(@PathVariable id: Int): ResponseEntity<Person> {
+  fun getPerson(@PathVariable id: Int): ResponseEntity<PersonResponse> {
     return personService.getPerson(id)
-      ?.let { ResponseEntity.ok(it) }
+      ?.let { ResponseEntity.ok(PersonResponse.fromPerson(it)) }
       ?: ResponseEntity.notFound().build()
   }
 
@@ -53,7 +54,7 @@ class PersonController @Autowired constructor(
   fun getPeople(
     @RequestParam(required = false, defaultValue = "0") offset: Int,
     @RequestParam(required = false, defaultValue = "10") limit: Int
-  ): List<Person> {
-    return personService.getPeople(offset, limit)
+  ): List<PersonResponse> {
+    return personService.getPeople(offset, limit).map(PersonResponse.Companion::fromPerson)
   }
 }

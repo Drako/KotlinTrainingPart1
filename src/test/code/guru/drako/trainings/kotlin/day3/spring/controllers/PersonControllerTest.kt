@@ -4,6 +4,7 @@ import com.ninjasquad.springmockk.MockkBean
 import guru.drako.trainings.kotlin.SpringTest
 import guru.drako.trainings.kotlin.day3.spring.entities.NewPerson
 import guru.drako.trainings.kotlin.day3.spring.entities.Person
+import guru.drako.trainings.kotlin.day3.spring.entities.PersonResponse
 import guru.drako.trainings.kotlin.day3.spring.services.PersonService
 import io.kotest.matchers.shouldBe
 import io.mockk.*
@@ -56,7 +57,7 @@ class PersonControllerTest {
     response.statusCode shouldBe HttpStatus.OK
     response.headers.location shouldBe URI.create("/person/1")
 
-    val expected = Person(1, "Felix", "Bytow")
+    val expected = PersonResponse(1, "Felix", "Bytow")
     response.body shouldBe expected
 
     // verify mocks

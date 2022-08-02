@@ -3,6 +3,7 @@ package guru.drako.trainings.kotlin.day3.spring.services
 import guru.drako.trainings.kotlin.day3.spring.NotFoundException
 import guru.drako.trainings.kotlin.day3.spring.entities.NewPerson
 import guru.drako.trainings.kotlin.day3.spring.entities.Person
+import guru.drako.trainings.kotlin.day3.spring.entities.PersonEntity
 import guru.drako.trainings.kotlin.day3.spring.entities.UpdatePerson
 import guru.drako.trainings.kotlin.day3.spring.repositories.PersonRepository
 import org.springframework.beans.factory.annotation.Autowired
@@ -14,16 +15,14 @@ import javax.transaction.Transactional
 class PersonService @Autowired constructor(
   private val repository: PersonRepository
 ) {
-  private var nextId = 1
-
   fun clear() {
     repository.deleteAll()
-    nextId = 1
   }
 
   fun newPerson(newPerson: NewPerson): Person {
-    return Person(id = nextId++, firstName = newPerson.firstName, lastName = newPerson.lastName)
-      .also { repository.save(it) }
+    return PersonEntity(firstName = newPerson.firstName, lastName = newPerson.lastName)
+      .let { repository.save(it) }
+      .toPerson()
   }
 
   @Transactional
@@ -51,10 +50,10 @@ class PersonService @Autowired constructor(
   }
 
   fun getPerson(id: Int): Person? {
-    return repository.findById(id).orElse(null)
+    return repository.findById(id).map(PersonEntity::toPerson).orElse(null)
   }
 
   fun getPeople(offset: Int, limit: Int): List<Person> {
-    return repository.findAll(PageRequest.of(offset / limit, limit)).toList()
+    return repository.findAll(PageRequest.of(offset / limit, limit)).map(PersonEntity::toPerson).toList()
   }
 }

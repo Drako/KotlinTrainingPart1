@@ -4,9 +4,11 @@ import guru.drako.trainings.kotlin.SpringTest
 import guru.drako.trainings.kotlin.day3.spring.controllers.PersonController
 import guru.drako.trainings.kotlin.day3.spring.entities.NewPerson
 import guru.drako.trainings.kotlin.day3.spring.entities.Person
+import guru.drako.trainings.kotlin.day3.spring.entities.PersonResponse
 import guru.drako.trainings.kotlin.day3.spring.repositories.PersonRepository
 import guru.drako.trainings.kotlin.day3.spring.services.PersonService
 import io.kotest.matchers.shouldBe
+import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Tag
@@ -69,9 +71,10 @@ class PersonApiTest {
       .andExpect(status().isOk)
       .andReturn()
 
-    result.response.getHeader("Location") shouldBe "/person/12"
-    val person = Json.decodeFromString(Person.serializer(), result.response.contentAsString)
-    val expected = Person(12, "Felix", "Bytow")
+    val person = Json.decodeFromString(PersonResponse.serializer(), result.response.contentAsString)
+
+    result.response.getHeader("Location") shouldBe "/person/${person.id}"
+    val expected = PersonResponse(person.id, "Felix", "Bytow")
 
     person shouldBe expected
   }
@@ -97,7 +100,7 @@ class PersonApiTest {
   @Test
   fun `update non existent person`() {
     val response = mockMvc.perform(
-      put("/person/42")
+      put("/person/1337")
         .contentType(MediaType.APPLICATION_JSON)
         .accept(MediaType.APPLICATION_JSON)
         // language=JSON
@@ -105,6 +108,6 @@ class PersonApiTest {
     ).andExpect(status().isNotFound)
       .andReturn().response
 
-    response.errorMessage shouldBe "Person#42 does not exist."
+    response.errorMessage shouldBe "Person#1337 does not exist."
   }
 }
