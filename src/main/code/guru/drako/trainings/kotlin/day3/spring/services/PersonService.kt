@@ -11,6 +11,11 @@ class PersonService {
   private val people = mutableListOf<Person>()
   private var nextId = 1
 
+  fun clear() {
+    people.clear()
+    nextId = 1
+  }
+
   fun newPerson(newPerson: NewPerson): Person {
     return Person(id = nextId++, firstName = newPerson.firstName, lastName = newPerson.lastName)
       .also { person -> people.add(person) }

@@ -1,35 +1,39 @@
 package guru.drako.trainings.kotlin.day3.spring.controllers
 
 import com.ninjasquad.springmockk.MockkBean
+import guru.drako.trainings.kotlin.SpringTest
 import guru.drako.trainings.kotlin.day3.spring.entities.NewPerson
 import guru.drako.trainings.kotlin.day3.spring.entities.Person
 import guru.drako.trainings.kotlin.day3.spring.services.PersonService
 import io.kotest.matchers.shouldBe
-import io.mockk.confirmVerified
-import io.mockk.every
-import io.mockk.slot
-import io.mockk.verify
-import kotlinx.serialization.json.Json
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Test
+import io.mockk.*
+import org.junit.jupiter.api.*
+import org.junit.jupiter.api.TestInstance.Lifecycle
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
-import org.springframework.http.MediaType
+import org.springframework.http.HttpStatus
 import org.springframework.test.context.junit.jupiter.SpringExtension
-import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import java.net.URI
+import javax.servlet.http.HttpServletResponse
+import javax.servlet.http.HttpServletResponse.SC_NOT_FOUND
+import javax.servlet.http.HttpServletResponse.SC_OK
 
 @ExtendWith(SpringExtension::class)
 @WebMvcTest(PersonController::class)
+@TestInstance(Lifecycle.PER_CLASS)
+@Tag(SpringTest)
 class PersonControllerTest {
   @MockkBean
   private lateinit var service: PersonService
 
   @Autowired
-  private lateinit var mockMvc: MockMvc
+  private lateinit var controller: PersonController
+
+  @BeforeEach
+  fun resetMocks() {
+    clearMocks(service)
+  }
 
   @AfterEach
   fun checkMocks() {
@@ -43,20 +47,12 @@ class PersonControllerTest {
       Person(id = 1, newPerson.captured.firstName, newPerson.captured.lastName)
     }
 
-    val result = mockMvc.perform(
-      post("/person")
-        .contentType(MediaType.APPLICATION_JSON)
-        // language=JSON
-        .content("""{"firstName": "Felix", "lastName": "Bytow"}""")
-    )
-      .andExpect(status().isOk)
-      .andReturn()
+    val response = controller.newPerson(NewPerson("Felix", "Bytow"))
+    response.statusCode shouldBe HttpStatus.OK
+    response.headers.location shouldBe URI.create("/person/1")
 
-    result.response.getHeader("Location") shouldBe "/person/1"
-    val person = Json.decodeFromString(Person.serializer(), result.response.contentAsString)
     val expected = Person(1, "Felix", "Bytow")
-
-    person shouldBe expected
+    response.body shouldBe expected
 
     verify { service.newPerson(any()) }
   }
@@ -65,19 +61,23 @@ class PersonControllerTest {
   fun `delete user successful`() {
     every { service.deletePerson(any()) } returns true
 
-    mockMvc.perform(delete("/person/42"))
-      .andExpect(status().isOk)
+    val response = mockk<HttpServletResponse>()
+    every { response.status = SC_OK } just Runs
+    controller.deletePerson(42, response)
 
     verify { service.deletePerson(any()) }
+    verify { response.status = SC_OK }
   }
 
   @Test
   fun `delete user failure`() {
     every { service.deletePerson(any()) } returns false
 
-    mockMvc.perform(delete("/person/42"))
-      .andExpect(status().isNotFound)
+    val response = mockk<HttpServletResponse>()
+    every { response.status = SC_NOT_FOUND } just Runs
+    controller.deletePerson(42, response)
 
     verify { service.deletePerson(any()) }
+    verify { response.status = SC_NOT_FOUND }
   }
 }

@@ -1,6 +1,7 @@
 package guru.drako.trainings.kotlin.day3.spring.controllers
 
 import guru.drako.trainings.kotlin.Day3Test
+import guru.drako.trainings.kotlin.SpringTest
 import io.kotest.matchers.shouldBe
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Tag
