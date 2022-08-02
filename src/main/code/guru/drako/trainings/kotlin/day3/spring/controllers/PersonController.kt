@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse.SC_OK
 class PersonController @Autowired constructor(
   val personService: PersonService
 ) {
-  @PostMapping("/", produces = ["application/json"])
+  @PostMapping(produces = ["application/json"])
   fun newPerson(@RequestBody person: NewPerson): ResponseEntity<Person> {
     val entity = personService.newPerson(person)
     return ResponseEntity.ok().headers(HttpHeaders().apply {
@@ -49,7 +49,7 @@ class PersonController @Autowired constructor(
       ?: ResponseEntity.notFound().build()
   }
 
-  @GetMapping("/", produces = ["application/json"])
+  @GetMapping(produces = ["application/json"])
   @ResponseBody
   fun getPeople(
     @RequestParam(required = false, defaultValue = "0") offset: Int,
